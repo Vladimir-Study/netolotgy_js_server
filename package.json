@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "forever --minUptime 1000 --spinSleepTime 1000 serve.js",
+    "start": "npm run kill && forever --minUptime 1000 --spinSleepTime 1000 serve.js",
     "watch": "forever -w serve.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "kill": "kill -9 $(lsof -i :7887) &>/dev/null | exit 0"
   },
   "author": "",
   "license": "ISC",

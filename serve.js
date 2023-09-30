@@ -140,8 +140,8 @@ const port = 7887;
 
 server.listen(port, (err) => {
   if (err) {
-    // alert(err);
+    alert(err);
   }
 
-  // console.log(`Server listened to port: ${port}`);
+  console.log(`Server listened to port: ${port}`);
 });
