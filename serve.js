@@ -122,13 +122,38 @@ app.use((ctx, next) => {
 
   const body = JSON.parse(ctx.request.body);
 
-  tickets.map((ticket) => {
-    if (ticket.id === body.id) {
-      const index = tickets.indexOf(ticket);
-      tickets[index] = body;
+  const { method } = ctx.request.query;
+  switch (method) {
+    case 'editTicket': {
+      tickets.map((ticket) => {
+        if (ticket.id === Number(body.id)) {
+          const index = tickets.indexOf(ticket);
+          tickets[index] = body;
+        }
+        return tickets;
+      });
+      ctx.body = { message: 'Ticked was edited!' };
+      next();
+      return;
     }
-    return tickets;
-  });
+    case 'editStatus': {
+      tickets.map((ticket) => {
+        if (ticket.id === Number(body.id)) {
+          const index = tickets.indexOf(ticket);
+          tickets[index].status = body.status;
+        }
+        return tickets;
+      });
+      ctx.body = { message: 'Ticked was edited!' };
+      next();
+      return;
+    }
+    default: {
+      ctx.response.status = 404;
+      next();
+    }
+  }
+
   ctx.body = { message: 'Ticked was edited!' };
 
   next();
